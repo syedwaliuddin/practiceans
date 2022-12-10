@@ -1,0 +1,35 @@
+---
+# tasks file for tomcat
+- apt:
+    update_cache: yes
+    name: "{{item}}"
+  with_items: 
+     - default-jdk
+     -  tree  
+  become: yes    
+- get_url:
+    url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+    dest: /opt/
+- unarchive:
+    src: /opt/apache-tomcat-10.0.27.tar.gz
+    dest: /opt/
+    remote_src: yes
+- template:
+    src: template/server.xml.j2
+    dest: /opt/apache-tomcat-10.0.27/conf/server.xml 
+  become: yes    
+- template:
+    src: template/context.xml.j2
+    dest: /opt/apache-tomcat-10.0.27/webapps/manager/META-INF/context.xml
+- template:
+    src: template/context.xml.j2
+    dest: /opt/apache-tomcat-10.0.27/webapps/host-manager/META-INF/context.xml  
+- template:
+    src: template/tomcat-user.xml.j2
+    dest: /opt/apache-tomcat-10.0.27/conf/tomcat-user.xml  
+- shell: |
+    sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh
+    sh /opt/apache-tomcat-10.0.27/bin/startup.sh
+    
+     
+          

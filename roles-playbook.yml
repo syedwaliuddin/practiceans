@@ -1,0 +1,5 @@
+---
+- hosts: group
+  roles:
+    - tomcat
+  become: yes   
