@@ -1,0 +1,23 @@
+---
+- hosts: group
+  become: true
+  tasks:
+    - apt:
+        update_cache: yes
+    - apt:
+        pkg: default-jdk
+    - get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+        dest: /opt/
+    - unarchive:
+        src: /opt/apache-tomcat-10.0.27.tar.gz
+        dest: /opt
+        remote_src: yes
+    - shell: |
+         /opt/apache-tomcat-10.0.27/bin/shutdown.sh
+         /opt/apache-tomcat-10.0.27/bin/startup.sh     
+    - template:
+         src: server.xml.j2
+         dest: /opt/apache-tomcat-10.0.27/conf/server.xml
+      vars:
+         tomcat_portnumber: 9090     

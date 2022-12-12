@@ -1,5 +1,5 @@
 ---
 - hosts: group
+  become: yes
   roles:
-    - tomcat
-  become: yes   
+    - tomcat 

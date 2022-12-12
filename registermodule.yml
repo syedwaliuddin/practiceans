@@ -1,0 +1,14 @@
+---
+- name: copying output of a task
+  hosts: all
+  become: true
+  tasks:
+    - shell: ls
+      register: mithun  
+    - debug:
+        var: mithun    
+    - copy:
+        src: vars.yml
+        dest: /home/syed/
+      loop: "{{mithun.stdout_lines}}"
+      when: item == "vars1.yml"   

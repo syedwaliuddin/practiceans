@@ -1,0 +1,11 @@
+---
+- hosts: group
+  become: true
+  vars:
+    a: default-jdik
+  tasks:
+    - apt:
+        pkg: "{{a}}"
+       
+
+  ciwbikucwivcwi          

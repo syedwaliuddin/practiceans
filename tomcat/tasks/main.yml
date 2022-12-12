@@ -2,11 +2,11 @@
 # tasks file for tomcat
 - apt:
     update_cache: yes
-    name: "{{item}}"
-  with_items: 
-     - default-jdk
-     -  tree  
-  become: yes    
+    name: default-jdk
+  become: yes       
+- debug:
+        var: ansible_facts
+- shell: rm -rf apache-tomcat-10.0.27.tar.gz
 - get_url:
     url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
     dest: /opt/
@@ -25,11 +25,9 @@
     src: template/context.xml.j2
     dest: /opt/apache-tomcat-10.0.27/webapps/host-manager/META-INF/context.xml  
 - template:
-    src: template/tomcat-user.xml.j2
-    dest: /opt/apache-tomcat-10.0.27/conf/tomcat-user.xml  
-- shell: |
-    sh /opt/apache-tomcat-10.0.27/bin/shutdown.sh
-    sh /opt/apache-tomcat-10.0.27/bin/startup.sh
+    src: template/tomcat-users.xml.j2
+    dest: /opt/apache-tomcat-10.0.27/conf/tomcat-users.xml
+  notify: restart tomcat    
     
      
           

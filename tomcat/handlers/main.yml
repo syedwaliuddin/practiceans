@@ -1,2 +1,6 @@
 ---
 # handlers file for tomcat
+- name: restart tomcat
+  shell: |
+      /opt/apache-tomcat-10.0.27/bin/shutdown.sh
+      /opt/apache-tomcat-10.0.27/bin/startup.sh

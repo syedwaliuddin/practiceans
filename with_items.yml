@@ -1,0 +1,11 @@
+---
+- hosts: group
+  tasks:
+    - copy:
+        src: file.txt
+        dest: "{{item}}"
+      with_items:
+           - /home/syed/
+           - /home/wali/    
+      become: true
+

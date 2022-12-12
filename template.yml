@@ -1,0 +1,10 @@
+---
+- hosts: group
+  become: true
+  vars:
+    a: wali
+    b: sangmesh
+  tasks:
+    - template:
+        src: template.j2
+        dest: /home/syed/file4 
